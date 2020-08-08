@@ -1,0 +1,7 @@
+[user]
+	name = m-sureshraj
+	email = m.s.suresh100@gmail.com
+[core]
+	editor = vim
+[pager]
+	branch = false
