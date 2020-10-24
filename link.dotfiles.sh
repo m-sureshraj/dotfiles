@@ -16,16 +16,15 @@ files="gitconfig vimrc" # list of files to symlink in homedir
 
 print "Linking dotfiles..."
 
+print "Creating $OLD_DOTFILES_DIR to backup matched dotfiles in $HOME"
+mkdir -p "$OLD_DOTFILES_DIR"
+
 for file in $files; do
   if [ -f "$HOME/.$file" ]; then
-    if [ ! -d "$OLD_DOTFILES_DIR" ]; then
-      print "Creating $OLD_DOTFILES_DIR to backup matched dotfiles in $HOME"
-      mkdir -p "$OLD_DOTFILES_DIR"
-    fi
-
     print "Moving .$file to $OLD_DOTFILES_DIR"
-
     cp "$HOME/.$file" "$OLD_DOTFILES_DIR/.$file"
+
+    print "Removing $HOME/.$file"
     rm -f "$HOME/.$file"
   fi
 

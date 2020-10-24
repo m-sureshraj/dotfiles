@@ -62,3 +62,34 @@ sudo aptitude install -y tree
 
 print "Installing zsh ..."
 sudo aptitude install -y zsh
+
+# https://github.com/nvm-sh/nvm#manual-install
+print "Installing node via NVM ..."
+export NVM_DIR="$HOME/.nvm" && (
+  git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
+  cd "$NVM_DIR"
+  git checkout "git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)"
+) && \. "$NVM_DIR/nvm.sh"
+
+nvm install --lts
+
+################################################################################
+# 3. Setup dotfiles
+################################################################################
+
+print "Step 3: Setup Dotfiles..."
+
+PATH_TO_DOT_FILES=$HOME/dotfiles/link.dotfiles.sh
+
+# shellcheck source=/dev/null
+source "$PATH_TO_DOT_FILES"
+
+################################################################################
+# 4. Setup Vim
+################################################################################
+
+print "Step 4: Setup Vim..."
+
+git clone https://github.com/blueshirts/darcula "$HOME"
+cp "$HOME"/darcula/colors/darcula.vim "$HOME"/.vim/colors/
+rm -rf "$HOME"/darcula
