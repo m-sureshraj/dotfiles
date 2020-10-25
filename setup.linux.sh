@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e # Terminate script if anything exits with a non-zero value
+
 print() {
   local fmt="$1"; shift
 
@@ -7,89 +9,95 @@ print() {
   printf "\n[BOOTSTRAP] $fmt\n" "$@"
 }
 
-################################################################################
-# Variable declarations
-################################################################################
-
+# Make sure we're on Linux before continuing
 osName=$(uname)
 
-################################################################################
-# Make sure we're on Linux before continuing
-################################################################################
-
 if [[ "$osName" != 'Linux' ]]; then
-  print "Oops, it looks like you're using a non-supported OS. Exiting..."
+  print "Oops, it looks like you're using a non-supported OS. Exiting"
   exit 1
 fi
 
-################################################################################
-# 1. Update the system.
-################################################################################
+# 1. Installing basic tools
+print "Installing basic tools"
 
-print "Step 1: Updating system packages..."
+print "Installing build-essential"
+sudo apt-get install -y build-essential
 
-if command -v aptitude >/dev/null; then
-  print "Using aptitude..."
-else
-  print "Installing aptitude..."
-  sudo apt-get install -y aptitude
-fi
+print "Installing curl"
+sudo apt-get install -y curl
 
-sudo aptitude update
-sudo aptitude -y upgrade
+print "Installing git"
+sudo apt-get install -y git
 
-################################################################################
-# 2. Install basic tools
-################################################################################
+print "Installing Vim"
+sudo apt-get install -y vim
 
-print "Step 2: Installing basic tools..."
-sudo aptitude install -y build-essential
+print "Installing htop"
+sudo apt-get install -y htop
 
-print "Installing curl ..."
-sudo aptitude install -y curl
+print "Installing tree"
+sudo apt-get install -y tree
 
-print "Installing git ..."
-sudo aptitude install -y git
+print "Installing zsh"
+sudo apt-get install -y zsh
 
-print "Installing Vim ..."
-sudo aptitude install -y vim
-
-print "Installing htop ..."
-sudo aptitude install -y htop
-
-print "Installing tree ..."
-sudo aptitude install -y tree
-
-print "Installing zsh ..."
-sudo aptitude install -y zsh
-
-# https://github.com/nvm-sh/nvm#manual-install
-print "Installing node via NVM ..."
+print "Installing Node Version Manager"
 export NVM_DIR="$HOME/.nvm" && (
   git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
   cd "$NVM_DIR"
-  git checkout "git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)"
+  git checkout $(git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1))
 ) && \. "$NVM_DIR/nvm.sh"
 
+print "Installing lts version of node via NVM"
 nvm install --lts
 
-################################################################################
-# 3. Setup dotfiles
-################################################################################
+# 2. Cloning dotfiles repository
+print "Setup dotfiles"
 
-print "Step 3: Setup Dotfiles..."
+DOTFILES_REPO_URL="https://github.com/m-sureshraj/dotfiles"
+DOTFILES_DIR=$HOME/dotfiles
 
-PATH_TO_DOT_FILES=$HOME/dotfiles/link.dotfiles.sh
+if [ -d "$DOTFILES_DIR" ]; then
+  print "Removing old $DOTFILES_DIR directory"
+  rm -rf "$DOTFILES_DIR"
+fi
+
+print "Cloning dotfiles repository"
+git clone $DOTFILES_REPO_URL "$DOTFILES_DIR"
 
 # shellcheck source=/dev/null
-source "$PATH_TO_DOT_FILES"
+source "$DOTFILES_DIR"/link.dotfiles.sh
 
-################################################################################
-# 4. Setup Vim
-################################################################################
+# 3. Setup Vim
+print "Setup Vim"
 
-print "Step 4: Setup Vim..."
+VIM_DIR=$HOME/.vim
+VIM_COLOR_SCHEME_REPO_URL="https://github.com/blueshirts/darcula.git"
 
-git clone https://github.com/blueshirts/darcula "$HOME"
-cp "$HOME"/darcula/colors/darcula.vim "$HOME"/.vim/colors/
+print "Cloning $VIM_COLOR_SCHEME_REPO_URL repository"
+git clone $VIM_COLOR_SCHEME_REPO_URL "$HOME"/darcula
+
+if [ ! -d "$VIM_DIR" ]; then
+  print "Creating $VIM_DIR in $HOME"
+  mkdir -p "$VIM_DIR"
+fi
+
+print "Copying darcula color scheme into $VIM_DIR/colors"
+cp -r "$HOME"/darcula/colors "$VIM_DIR"
+
+print "Removing darcula color scheme repo"
 rm -rf "$HOME"/darcula
+
+echo "**** Bootstrap script complete! Please restart your computer. ****"
+
+# Todo install oh-my-zsh
+#print "Installing oh-my-zsh"
+#
+#if [ -d "$HOME"/.oh-my-zsh ]; then
+#  rm -rf "$HOME"/.oh-my-zsh
+#fi
+#
+#git clone git://github.com/robbyrussell/oh-my-zsh.git "$HOME"/.oh-my-zsh
+#
+#print "Changing your shell to zsh"
+#chsh -s "$(command -v zsh)"
