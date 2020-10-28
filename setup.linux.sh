@@ -41,6 +41,9 @@ sudo apt-get install -y tree
 print "Installing zsh"
 sudo apt-get install -y zsh
 
+print "Installing fonts-powerline"
+sudo apt-get install -y fonts-powerline
+
 print "Installing Node Version Manager"
 export NVM_DIR="$HOME/.nvm" && (
   git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
@@ -88,16 +91,10 @@ cp -r "$HOME"/darcula/colors "$VIM_DIR"
 print "Removing darcula color scheme repo"
 rm -rf "$HOME"/darcula
 
-echo "**** Bootstrap script complete! Please restart your computer. ****"
+# 4. Setup oh-my-zsh
+print "Setup oh-my-zsh"
 
-# Todo install oh-my-zsh
-#print "Installing oh-my-zsh"
-#
-#if [ -d "$HOME"/.oh-my-zsh ]; then
-#  rm -rf "$HOME"/.oh-my-zsh
-#fi
-#
-#git clone git://github.com/robbyrussell/oh-my-zsh.git "$HOME"/.oh-my-zsh
-#
-#print "Changing your shell to zsh"
-#chsh -s "$(command -v zsh)"
+# shellcheck source=/dev/null
+source "$DOTFILES_DIR"/setup.ohmyzsh.sh
+
+echo "**** Bootstrap script complete! Please restart your computer. ****"
