@@ -1,4 +1,4 @@
-# Suresh's dotfiles
+# Suresh's dotfiles (WIP)
 Coming soon.
 
 ## Installation
