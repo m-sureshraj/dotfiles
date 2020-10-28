@@ -12,7 +12,7 @@ set -u # Prevent unset variables
 
 DOTFILES_DIR=$HOME/dotfiles
 OLD_DOTFILES_DIR=$HOME/old_dotfiles
-files="gitconfig vimrc" # list of files to symlink in homedir
+files="gitconfig vimrc zshrc" # list of files to symlink in homedir
 
 print "Linking dotfiles..."
 
