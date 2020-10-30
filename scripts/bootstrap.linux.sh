@@ -13,36 +13,45 @@ print() {
 osName=$(uname)
 
 if [[ "$osName" != 'Linux' ]]; then
-  print "Oops, it looks like you're using a non-supported OS. Exiting"
+  print "Oops, it looks like you're using a non-supported OS."
   exit 1
 fi
 
-# 1. Installing basic tools
-print "Installing basic tools"
+tools=('build-essential' 'curl' 'git' 'vim' 'htop' 'tree' 'zsh' 'fonts-powerline' 'shellcheck')
 
-print "Installing build-essential"
-sudo apt-get install -y build-essential
+for tool in "${tools[@]}"
+do
+    print "Installing ${tool}"
+    sudo apt-get install -y "$tool"
+done
 
-print "Installing curl"
-sudo apt-get install -y curl
-
-print "Installing git"
-sudo apt-get install -y git
-
-print "Installing Vim"
-sudo apt-get install -y vim
-
-print "Installing htop"
-sudo apt-get install -y htop
-
-print "Installing tree"
-sudo apt-get install -y tree
-
-print "Installing zsh"
-sudo apt-get install -y zsh
-
-print "Installing fonts-powerline"
-sudo apt-get install -y fonts-powerline
+#
+## 1. Installing basic tools
+#print "Installing basic tools"
+#
+#print "Installing build-essential"
+#sudo apt-get install -y build-essential
+#
+#print "Installing curl"
+#sudo apt-get install -y curl
+#
+#print "Installing git"
+#sudo apt-get install -y git
+#
+#print "Installing Vim"
+#sudo apt-get install -y vim
+#
+#print "Installing htop"
+#sudo apt-get install -y htop
+#
+#print "Installing tree"
+#sudo apt-get install -y tree
+#
+#print "Installing zsh"
+#sudo apt-get install -y zsh
+#
+#print "Installing fonts-powerline"
+#sudo apt-get install -y fonts-powerline
 
 print "Installing Node Version Manager"
 export NVM_DIR="$HOME/.nvm" && (
@@ -69,7 +78,7 @@ print "Cloning dotfiles repository"
 git clone $DOTFILES_REPO_URL "$DOTFILES_DIR"
 
 # shellcheck source=/dev/null
-source "$DOTFILES_DIR"/link.dotfiles.sh
+source "$DOTFILES_DIR"/scripts/link.dotfiles.sh
 
 # 3. Setup Vim
 print "Setup Vim"
@@ -95,6 +104,6 @@ rm -rf "$HOME"/darcula
 print "Setup oh-my-zsh"
 
 # shellcheck source=/dev/null
-source "$DOTFILES_DIR"/setup.ohmyzsh.sh
+source "$DOTFILES_DIR"/scripts/setup.ohmyzsh.sh
 
-echo "**** Bootstrap script complete! Please restart your computer. ****"
+echo "**** Bootstrap script has been complete! Please restart your computer. ****"

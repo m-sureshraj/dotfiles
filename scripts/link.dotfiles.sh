@@ -8,7 +8,7 @@ print() {
 }
 
 set -e # Terminate script if anything exits with a non-zero value
-set -u # Prevent unset variables
+#set -u # Prevent unset variables
 
 DOTFILES_DIR=$HOME/dotfiles
 OLD_DOTFILES_DIR=$HOME/old_dotfiles
