@@ -25,34 +25,6 @@ do
     sudo apt-get install -y "$tool"
 done
 
-#
-## 1. Installing basic tools
-#print "Installing basic tools"
-#
-#print "Installing build-essential"
-#sudo apt-get install -y build-essential
-#
-#print "Installing curl"
-#sudo apt-get install -y curl
-#
-#print "Installing git"
-#sudo apt-get install -y git
-#
-#print "Installing Vim"
-#sudo apt-get install -y vim
-#
-#print "Installing htop"
-#sudo apt-get install -y htop
-#
-#print "Installing tree"
-#sudo apt-get install -y tree
-#
-#print "Installing zsh"
-#sudo apt-get install -y zsh
-#
-#print "Installing fonts-powerline"
-#sudo apt-get install -y fonts-powerline
-
 print "Installing Node Version Manager"
 export NVM_DIR="$HOME/.nvm" && (
   git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
@@ -106,4 +78,6 @@ print "Setup oh-my-zsh"
 # shellcheck source=/dev/null
 source "$DOTFILES_DIR"/scripts/setup.ohmyzsh.sh
 
-echo "**** Bootstrap script has been complete! Please restart your computer. ****"
+echo "****************************************************************"
+echo "Bootstrap script has been complete! Please restart the computer."
+echo "****************************************************************"
