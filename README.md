@@ -1,6 +1,8 @@
 # Suresh's dotfiles
 
-coming soon...
+![terminal setup](./media/terminal.png)
+
+This repository contains my dotfiles, and a set of [scripts](./scripts) to symlink all the dotfiles, install all the tools I need on Ubuntu.
 
 ## Installation
 
@@ -17,7 +19,7 @@ The above script has been successfully tested on the following Ubuntu releases.
 
 ## What does it do?
 
-When you invoke the above script, this is what it does in a nutshell:
+When you invoke the above script, this is what it does in a nutshell.
 
 * Updates system package lists. `apt-get update`
 * Install a few system dependencies and util packages
