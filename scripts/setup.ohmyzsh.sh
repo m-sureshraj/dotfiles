@@ -3,9 +3,7 @@
 set -e
 
 print() {
-  local msg="$1"; shift
-
-  printf "\n[OH-MY-ZSH] %s\n" "$msg"
+  printf "\n[OH-MY-ZSH] %s\n" "$1"
 }
 
 OH_MY_ZSH_PATH=$HOME/.oh-my-zsh

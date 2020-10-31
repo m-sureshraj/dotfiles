@@ -3,9 +3,7 @@
 set -e
 
 print() {
-  local msg="$1"; shift
-
-  printf "[LINKING] %s\n" "$msg"
+  printf "[LINKING] %s\n" "$1"
 }
 
 DOTFILES_DIR=$HOME/dotfiles

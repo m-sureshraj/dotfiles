@@ -4,10 +4,7 @@
 set -e
 
 print() {
-  local msg="$1"; shift
-
-  # shellcheck disable=SC2059
-  printf "\n[BOOTSTRAP] %s\n" "$msg"
+  printf "\n[BOOTSTRAP] %s\n" "$1"
 }
 
 # Make sure we're on Linux before continuing
@@ -36,7 +33,7 @@ export NVM_DIR="$HOME/.nvm" && (
   git checkout $(git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1))
 ) && \. "$NVM_DIR/nvm.sh"
 
-print "Installing lts version of node via NVM"
+print "Installing latest LTS release of Node.js through NVM"
 nvm install --lts
 
 # 2. Cloning dotfiles repository
