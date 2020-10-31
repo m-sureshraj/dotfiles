@@ -1,21 +1,22 @@
 #!/usr/bin/env bash
 
+set -e
+
 print() {
-  local fmt="$1"; shift
+  local msg="$1"; shift
 
-  # shellcheck disable=SC2059
-  printf "\n[DOTFILES] $fmt\n" "$@"
+  printf "[LINKING] %s\n" "$msg"
 }
-
-set -e # Terminate script if anything exits with a non-zero value
 
 DOTFILES_DIR=$HOME/dotfiles
 OLD_DOTFILES_DIR=$HOME/old_dotfiles
-files="gitconfig vimrc zshrc" # list of files to symlink in homedir
+
+# list of files to symlink in homedir
+files=('gitconfig' 'vimrc' 'zshrc')
 
 print "Linking dotfiles..."
 
-for file in $files; do
+for file in "${files[@]}"; do
   if [ -f "$HOME/.$file" ]; then
     if [ ! -d "$OLD_DOTFILES_DIR" ]; then
       print "Creating $OLD_DOTFILES_DIR to backup matched dotfiles in $HOME"
@@ -29,7 +30,7 @@ for file in $files; do
     rm -f "$HOME/.$file"
   fi
 
-  print "-> Linking $DOTFILES_DIR/$file to $HOME/.$file"
+  print "→ Linking $DOTFILES_DIR/$file to $HOME/.$file"
   ln -nfs "$DOTFILES_DIR/$file" "$HOME/.$file"
 done
 

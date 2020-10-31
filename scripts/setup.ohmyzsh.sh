@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
-OH_MY_ZSH_PATH=$HOME/.oh-my-zsh
-PLUGINS_PATH=$OH_MY_ZSH_PATH/custom/plugins
+set -e
 
 print() {
-  local fmt="$1"; shift
+  local msg="$1"; shift
 
-  # shellcheck disable=SC2059
-  printf "\n[OH-MY-ZSH] $fmt\n" "$@"
+  printf "\n[OH-MY-ZSH] %s\n" "$msg"
 }
+
+OH_MY_ZSH_PATH=$HOME/.oh-my-zsh
+PLUGINS_PATH=$OH_MY_ZSH_PATH/custom/plugins
 
 if [ -d "$OH_MY_ZSH_PATH" ]; then
   print "Removing existing $HOME/.oh-my-zsh directory"

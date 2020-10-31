@@ -1,23 +1,24 @@
 #!/usr/bin/env bash
 
-set -e # Terminate script if anything exits with a non-zero value
+# Terminate script if anything exits with a non-zero value
+set -e
 
 print() {
-  local fmt="$1"; shift
+  local msg="$1"; shift
 
   # shellcheck disable=SC2059
-  printf "\n[BOOTSTRAP] $fmt\n" "$@"
+  printf "\n[BOOTSTRAP] %s\n" "$msg"
 }
 
 # Make sure we're on Linux before continuing
 osName=$(uname)
 
 if [[ "$osName" != 'Linux' ]]; then
-  print "Oops, it looks like you're using a non-supported OS."
+  print "Oops, The bootstrap script should be executed on a Linux OS."
   exit 1
 fi
 
-tools=('build-essential' 'curl' 'git' 'vim' 'htop' 'tree' 'zsh' 'fonts-powerline' 'shellcheck')
+tools=('build-essential' 'curl' 'git' 'vim' 'htop' 'tree' 'zsh' 'fonts-powerline')
 
 for tool in "${tools[@]}"
 do
@@ -79,5 +80,5 @@ print "Setup oh-my-zsh"
 source "$DOTFILES_DIR"/scripts/setup.ohmyzsh.sh
 
 echo "****************************************************************"
-echo "Bootstrap script has been complete! Please restart the computer."
+echo "Bootstrap script has been completed! Please restart the computer."
 echo "****************************************************************"
