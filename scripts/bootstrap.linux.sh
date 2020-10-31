@@ -18,6 +18,9 @@ if [[ "$osName" != 'Linux' ]]; then
   exit 1
 fi
 
+print "Updating package list"
+sudo apt-get update
+
 tools=('build-essential' 'curl' 'git' 'vim' 'htop' 'tree' 'zsh' 'fonts-powerline')
 
 for tool in "${tools[@]}"
