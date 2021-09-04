@@ -18,7 +18,7 @@ fi
 print "Updating package list"
 sudo apt-get update
 
-tools=('build-essential' 'curl' 'git' 'vim' 'htop' 'tree' 'zsh' 'fonts-powerline')
+tools=('build-essential' 'curl' 'git' 'vim' 'htop' 'tree' 'zsh' 'fonts-powerline' 'fzf', 'fd-find')
 
 for tool in "${tools[@]}"
 do

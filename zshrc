@@ -112,8 +112,26 @@ alias nl="npm run lint"
 alias grc="git rebase --continue"
 alias gsp="git stash pop"
 alias c="clear"
+alias gcan="git commit --amend --no-edit"
+
+# Docker
+alias dc="docker-compose"
+
+# FZF Begin
+alias fd=fdfind
+alias fcd=cd_with_fzf
+alias fh="history | fzf --tac +s"
+
+cd_with_fzf() {
+    cd "$(fd -t d | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)"
+}
+
+export FZF_DEFAULT_OPTS='--height 50% --layout=reverse'
+# FZF End
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH=$PATH:/usr/local/go/bin
 
